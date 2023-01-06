@@ -28,8 +28,8 @@ To run the script, type
 `npm run generate`
 
 ## Commands
-resource    generate model and endpoints for create, read, update and delete
-rest-api    generate rest api endpoints
+`resource` - generate model and endpoints for create, read, update and delete
+`rest-api` - generate rest api endpoints
 
 ## Example
 Let's generate the required files for a car
