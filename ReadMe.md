@@ -29,6 +29,7 @@ To run the script, type
 
 ## Commands
 `resource` - generate model and endpoints for create, read, update and delete
+
 `rest-api` - generate rest api endpoints
 
 ## Example
