@@ -3,7 +3,7 @@
     return null
   endif
 
-  graphql r  = '<%= modelNamePlural %>/search', id: id, limit: 1
+  graphql r  = '<%= options.outputLogicFolder %>/<%= modelNamePlural %>/search', id: id, limit: 1
 
   return r.<%= modelNamePlural %>.results.first
 %}

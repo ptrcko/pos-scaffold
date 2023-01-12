@@ -105,7 +105,7 @@ module.exports = class extends Generator {
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/commands/model'),
-        this.destinationPath(`${this.options.outputLogicFolder}/views/partials/lib/commands/${this.props.modelNamePlural}`),
+        this.destinationPath(`${this.options.outputLogicFolder}/views/partials/commands/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
@@ -115,7 +115,7 @@ module.exports = class extends Generator {
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/theme/simple/model'),
-        this.destinationPath(`${this.options.outputThemeFolder}/views/partials/${this.options.theme}/${this.props.modelNamePlural}`),
+        this.destinationPath(`${this.options.outputThemeFolder}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
         this.props
       )
     } catch (e) {

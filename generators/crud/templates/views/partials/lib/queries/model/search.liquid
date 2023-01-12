@@ -1,5 +1,5 @@
 {% liquid
-  graphql r = '<%= modelNamePlural %>/search', limit: limit, page: 1
+  graphql r = '<%= options.outputLogicFolder %>/<%= modelNamePlural %>/search', limit: limit, page: 1
   include '<%= options.outputLogicFolder %>/handle_graphql_response', r: r, name: 'queries/<%= modelNamePlural %>/search'
 
   return r.<%= modelNamePlural %>
