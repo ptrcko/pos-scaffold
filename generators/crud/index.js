@@ -6,25 +6,52 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const startCase = require('lodash.startcase');
 
+
+const readYml = (schema,schemaFolder) =>{
+  const folderPath = path.join(__dirname, "../..", schemaFolder, 'schema');
+  const filePath = `${folderPath}\\${schema}.yml`
+  try {
+    const data = fs.readFileSync(filePath, 'utf8');
+
+    try{
+      const properties = yaml.load(data).properties;
+
+      return properties;
+    }catch (err){
+      console.error(err);
+    }
+    properties = yaml.load(data);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
+    this.argument('schema', { type: String, required: true });
+    this.argument('schemaFolder', { type: String, required: true });
+    this.argument('outputLogicFolder', { type: String, required: true });
+    this.argument('outputThemeFolder', { type: String, required: true });
+    this.argument('outputTheme', { type: String, required: true });
 
-    this.argument('modelName', { type: String, required: true });
-    this.argument('attributes', { type: Array, required: true });
-
-    const attributes = this.options.attributes.map((attr) => {
-      const values = attr.split(':');
+    const properties = readYml(this.options.schema, this.options.schemaFolder)
+    const attributes = properties.map((attr) => {
       return {
-        name: values[0],
-        nameHuman: startCase(values[0]),
-        type: values[1],
+        name: attr.name,
+        nameHuman: startCase(attr.name),
+        type: attr.type,
       };
     });
+
+    console.log(this.options.originalOptions, "original")
+    const options = this.options;
     this.props = {
-      modelName: this.options.modelName,
-      modelNamePlural: pluralize(this.options.modelName),
+      modelName: this.options.schema,
+      modelNamePlural: pluralize(this.options.schema),
       attributes: attributes,
+      options: options,
       graphqlArgumentMap: {
         string: "String",
         text: "String",
@@ -60,34 +87,35 @@ module.exports = class extends Generator {
 
   writing() {
     try{
+     /* 
       this.fs.copyTpl(
         this.templatePath('./schema/model.yml'),
         this.destinationPath(`app/schema/${this.props.modelName}.yml`),
         this.props
-      )
+      )*/
       this.fs.copyTpl(
         this.templatePath('./graphql/*.graphql'),
-        this.destinationPath(`app/graphql/${this.props.modelNamePlural}/`),
+        this.destinationPath(`${this.options.outputLogicFolder}/graphql/${this.props.modelNamePlural}/`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/queries/model'),
-        this.destinationPath(`app/views/partials/lib/queries/${this.props.modelNamePlural}`),
+        this.destinationPath(`${this.options.outputLogicFolder}/views/partials/lib/queries/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/commands/model'),
-        this.destinationPath(`app/views/partials/lib/commands/${this.props.modelNamePlural}`),
+        this.destinationPath(`${this.options.outputLogicFolder}/views/partials/lib/commands/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/pages/model'),
-        this.destinationPath(`app/views/pages/${this.props.modelNamePlural}`),
+        this.destinationPath(`${this.options.outputLogicFolder}/views/pages/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/theme/simple/model'),
-        this.destinationPath(`app/views/partials/theme/simple/${this.props.modelNamePlural}`),
+        this.destinationPath(`${this.options.outputThemeFolder}/views/partials/${this.options.theme}/${this.props.modelNamePlural}`),
         this.props
       )
     } catch (e) {

@@ -3,10 +3,10 @@ slug: <%= modelNamePlural %>
 method: put
 ---
 {% liquid
-  function object = 'lib/commands/call', object: context.params.<%= modelName %>, command: '<%= modelNamePlural %>/update', selection: 'model_update'
+  function object = '<%= options.outputLogicFolder %>/commands/call', object: context.params.<%= modelName %>, command: '<%= modelNamePlural %>/update', selection: 'model_update'
   if object.valid
     include 'redirect_to', url: '/<%= modelNamePlural %>'
   else
-    include 'theme/simple/<%= modelNamePlural %>/edit', object: object
+    include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/edit', object: object
   endif
 %}

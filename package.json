@@ -5,14 +5,14 @@
   "bin": {
     "generate": "node bin/generate"
   },
-  "scripts":{
+  "scripts": {
     "generate": "node bin/generate"
   },
   "author": "patrick@atomdigital.com.au",
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.3.0",
-    "commander": "^2.13.0",
+    "commander": "^9.5.0",
     "js-yaml": "^3.14.0",
     "lodash.startcase": "^4.4.0",
     "pluralize": "^8.0.0",
