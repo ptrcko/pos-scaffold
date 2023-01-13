@@ -8,14 +8,18 @@ const path = require("path");
 const chalk = require("chalk");
 const fs = require('fs');
 const yaml = require('js-yaml');
+const config = require('../config');
+const defaults = config.defaults;
+const basePath = config.basePath;
+
 
 
 const run = (options) =>{
-  const schemaFolder  = options.schemaFolder|| 'app';
+  const schemaFolder  = options.schemaFolder || defaults.schemaFolder;
   const schema  = options.schema || '';
-  const outputLogicFolder = options.outputLogicFolder || 'modules/func';
-  const outputThemeFolder = options.outputThemeFolder|| 'modules/theme';
-  const outputTheme = options.outputTheme || 'simple';
+  const outputLogicFolder = options.outputLogicFolder ||  defaults.outputLogicFolder;
+  const outputThemeFolder = options.outputThemeFolder || defaults.outputThemeFolder;
+  const outputTheme = options.outputTheme || defaults.outputTheme;
 
   const opt = {
     schemaFolder: schemaFolder,
@@ -24,15 +28,29 @@ const run = (options) =>{
     outputTheme: outputTheme
   }
   
-  /* Check if we have a schema name 
-     If not, we will check all files
+  /* Check if we have a single schema name 
    */
   if(schema){
 
     runYeoman(schema, opt);
 
   }else{
-    
+    /* If not, read all the files in the directory
+     */
+    const schemaFolder = path.join(config.basePath, opt.schemaFolder,"schema");
+    console.log(schemaFolder);
+    files = fs.readdir(schemaFolder,function(e,files){
+      console.log(files);
+      for (var i = 0; i < files.length; i++) {
+        console.log(files[i]);
+        //Do something
+        fileParts = files[i].split(".");
+        console.log({fileParts})
+        if(fileParts[1] =="yml"){
+          runYeoman(fileParts[0], opt);
+        }
+      }
+    })
   }
 
 

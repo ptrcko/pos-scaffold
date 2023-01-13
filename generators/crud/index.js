@@ -5,10 +5,13 @@ const pluralize = require('pluralize');
 const fs = require('fs');
 const yaml = require('js-yaml');
 const startCase = require('lodash.startcase');
+const basePath = require('../../config.js').basePath
+
 
 
 const readYml = (schema,schemaFolder) =>{
-  const folderPath = path.join(__dirname, "../..", schemaFolder, 'schema');
+  const folderPath = path.join(basePath, schemaFolder, 'schema');
+
   const filePath = `${folderPath}\\${schema}.yml`
   try {
     const data = fs.readFileSync(filePath, 'utf8');
@@ -44,9 +47,13 @@ module.exports = class extends Generator {
         type: attr.type,
       };
     });
-
-    console.log(this.options.originalOptions, "original")
+    
     const options = this.options;
+    if (options.schmea = "app"){
+      const optionalPublicFolder = "/public"
+      this.options.outputLogicFolder += optionalPublicFolder
+      this.options.outputThemeFolder += optionalPublicFolder
+    }
     this.props = {
       modelName: this.options.schema,
       modelNamePlural: pluralize(this.options.schema),
@@ -95,27 +102,27 @@ module.exports = class extends Generator {
       )*/
       this.fs.copyTpl(
         this.templatePath('./graphql/*.graphql'),
-        this.destinationPath(`${this.options.outputLogicFolder}/graphql/${this.props.modelNamePlural}/`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/graphql/${this.props.modelNamePlural}/`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/queries/model'),
-        this.destinationPath(`${this.options.outputLogicFolder}/views/partials/lib/queries/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/views/partials/lib/queries/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/commands/model'),
-        this.destinationPath(`${this.options.outputLogicFolder}/views/partials/commands/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/views/partials/commands/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/pages/model'),
-        this.destinationPath(`${this.options.outputLogicFolder}/views/pages/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/views/pages/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/theme/simple/model'),
-        this.destinationPath(`${this.options.outputThemeFolder}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputThemeFolder}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
         this.props
       )
     } catch (e) {
