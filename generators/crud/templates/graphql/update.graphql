@@ -19,7 +19,11 @@ mutation update_<%= modelName %>(
     created_at
     updated_at
   <% attributes.forEach((attr) => { -%>
+    <%_ if (graphqlPropertyMap[attr.type] != "property_upload"){ _%>
     <%= attr.name %>: <%= graphqlPropertyMap[attr.type] %>(name: "<%= attr.name %>")
+    <%_ } else { _%>
+    <%= attr.name %>: <%= graphqlPropertyMap[attr.type] %>(name: "<%= attr.name %>") {url}
+    <%_ }; _%>
   <% }); -%>
   }
 }

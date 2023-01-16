@@ -40,12 +40,12 @@ const run = (options) =>{
     const schemaFolder = path.join(config.basePath, opt.schemaFolder,"schema");
     console.log(schemaFolder);
     files = fs.readdir(schemaFolder,function(e,files){
-      console.log(files);
+      //console.log(files);
       for (var i = 0; i < files.length; i++) {
         console.log(files[i]);
         //Do something
         fileParts = files[i].split(".");
-        console.log({fileParts})
+        //console.log({fileParts})
         if(fileParts[1] =="yml"){
           runYeoman(fileParts[0], opt);
         }
@@ -64,7 +64,9 @@ const runYeoman = (modelName, options) => {
   env.register(generatorPath, generatorName);
   const cmd = `crud ${modelName} ${options.schemaFolder} ${options.outputLogicFolder} ${options.outputThemeFolder} ${options.outputTheme}`;
   env.run(cmd).then((e)=> {
-    console.log(e);
+    if(e){
+      console.log(e);
+    }
   });
 
 }

@@ -3,10 +3,10 @@ slug: <%= modelNamePlural %>
 method: put
 ---
 {% liquid
-  function current_profile = 'lib/current_profile_api', user_id: context.current_user.id, required: true
+  function current_profile = 'current_profile_api', user_id: context.current_user.id, required: true
 
-  function object = 'lib/queries/<%= modelNamePlural %>/find', id: context.params.id
-  function object = 'lib/commands/<%= modelNamePlural %>/update', object: object, params: context.params.<%= modelName %>
+  function object = 'queries/<%= modelNamePlural %>/find', id: context.params.id
+  function object = 'commands/<%= modelNamePlural %>/update', object: object, params: context.params.<%= modelName %>
 
   render 'theme/json/shared/show', object: object
 %}

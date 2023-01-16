@@ -2,4 +2,4 @@
   <h1 class="title">{{ 'app.models.<%= modelNamePlural %>.edit' | t }} {{ object.name  }}</h1>
 </div>
 
-{% include 'theme/simple/<%= modelNamePlural %>/form', object: object %}
+{% include '<%= options.outputThemeFolder %>/<%= options.outputTheme %>/<%= modelNamePlural %>/form', object: object %}

@@ -43,7 +43,7 @@
         </tbody>
       </table>
     {% else %}
-      {% include 'theme/simple/<%= modelNamePlural %>/empty_state' %}
+      {% include '<%= options.outputThemeFolder %>/<%= options.outputTheme %>/<%= modelNamePlural %>/empty_state' %}
     {% endif %}
   </div>
 </div>

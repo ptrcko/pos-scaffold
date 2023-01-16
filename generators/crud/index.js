@@ -17,13 +17,11 @@ const readYml = (schema,schemaFolder) =>{
     const data = fs.readFileSync(filePath, 'utf8');
 
     try{
-      const properties = yaml.load(data).properties;
-
-      return properties;
+      const properties = yaml.loadAll(data);
+      return properties[0].properties;
     }catch (err){
       console.error(err);
     }
-    properties = yaml.load(data);
   } catch (err) {
     console.error(err);
   }
@@ -49,10 +47,12 @@ module.exports = class extends Generator {
     });
     
     const options = this.options;
+    this.options.outputLogicFolderLocation = this.options.outputLogicFolder
+    this.options.outputThemeFolderLocation = this.options.outputThemeFolder
     if (options.schmea = "app"){
       const optionalPublicFolder = "/public"
-      this.options.outputLogicFolder += optionalPublicFolder
-      this.options.outputThemeFolder += optionalPublicFolder
+      this.options.outputLogicFolderLocation += optionalPublicFolder
+      this.options.outputThemeFolderLocation += optionalPublicFolder
     }
     this.props = {
       modelName: this.options.schema,
@@ -67,7 +67,8 @@ module.exports = class extends Generator {
         float: "Float",
         date: "String",
         datetime: "String",
-        array: "[String]"
+        array: "[String]",
+        upload: "String"
       },
       graphqlArgumentValueMap: {
         string: "value",
@@ -77,7 +78,8 @@ module.exports = class extends Generator {
         float: "value_float",
         date: "value",
         datetime: "value",
-        array: "value_array"
+        array: "value_array",
+        upload: "value"
       },
       graphqlPropertyMap: {
         string: "property",
@@ -87,7 +89,8 @@ module.exports = class extends Generator {
         float: "property_float",
         date: "property",
         datetime: "property",
-        array: "property_array"
+        array: "property_array",
+        upload: "property_upload"
       }
     };
   }
@@ -102,27 +105,27 @@ module.exports = class extends Generator {
       )*/
       this.fs.copyTpl(
         this.templatePath('./graphql/*.graphql'),
-        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/graphql/${this.props.modelNamePlural}/`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolderLocation}/graphql/${this.props.modelNamePlural}/`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/queries/model'),
-        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/views/partials/lib/queries/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolderLocation}/views/partials/queries/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/lib/commands/model'),
-        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/views/partials/commands/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputLogicFolderLocation}/views/partials/commands/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/pages/model'),
-        this.destinationPath(`${basePath}/${this.options.outputLogicFolder}/views/pages/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/views/pages/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/theme/simple/model'),
-        this.destinationPath(`${basePath}/${this.options.outputThemeFolder}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
         this.props
       )
     } catch (e) {
