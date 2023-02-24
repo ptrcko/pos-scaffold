@@ -91,18 +91,26 @@ module.exports = class extends Generator {
         datetime: "property",
         array: "property_array",
         upload: "property_upload"
+      },
+      formFieldTypeMap: {
+        string: "text",
+        text: "date",
+        integer: "number",
+        boolean: "text",
+        float: "text",
+        date: "text",
+        datetime: "text",
+        array: "text",
+        upload: "text"
+      },
+      liquidTagMap: {
+        integer: ' | times: 1',   
       }
     };
   }
 
   writing() {
     try{
-     /* 
-      this.fs.copyTpl(
-        this.templatePath('./schema/model.yml'),
-        this.destinationPath(`app/schema/${this.props.modelName}.yml`),
-        this.props
-      )*/
       this.fs.copyTpl(
         this.templatePath('./graphql/*.graphql'),
         this.destinationPath(`${basePath}/${this.options.outputLogicFolderLocation}/graphql/${this.props.modelNamePlural}/`),
@@ -126,6 +134,11 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('./views/partials/theme/simple/model'),
         this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
+        this.props
+      )
+      this.fs.copyTpl(
+        this.templatePath('./translations/model.yml'),
+        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/translations/${this.options.outputTheme}/${this.props.modelNamePlural}.yml`),
         this.props
       )
     } catch (e) {

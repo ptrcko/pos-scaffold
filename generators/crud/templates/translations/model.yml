@@ -1,4 +1,4 @@
-model:
+<%= modelNamePlural %>:
   new: New <%= modelName %>
   add: Add <%= modelName %>
   edit: Edit <%= modelName %>

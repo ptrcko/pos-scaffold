@@ -5,7 +5,7 @@ var config = {};
 /* Assumes the scaffold folder is installed in the same folder as the
  * platformOS App folder
  */
-config.basePath =  path.join(__dirname, "./../");
+config.basePath =  path.join(__dirname, "./");
 
 config.defaults = {} 
 config.defaults.schemaFolder = 'app';

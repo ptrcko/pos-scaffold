@@ -1,3 +1,7 @@
-<h3 class="title">{{ 'app.models.<%= modelNamePlural %>.new' | t }}</h3>
+<div class="grid-x align-center">
+  <div class="large-4 medium-4 cell">
+    <h3 class="title">{{ 'app.models.<%= modelNamePlural %>.new' | t }}</h3>
 
-{% include '<%= options.outputThemeFolder %>/<%= options.outputTheme %>/<%= modelNamePlural %>/form', <%= modelName %>: <%= modelName %> %}
+    {% include '<%= options.outputThemeFolder %>/<%= options.outputTheme %>/<%= modelNamePlural %>/form', <%= modelName %>: <%= modelName %> %}
+  </div>
+</div>

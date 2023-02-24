@@ -6,7 +6,7 @@
     "generate": "node bin/generate"
   },
   "scripts": {
-    "generate": "node bin/generate"
+    "generate": "node bin/generate crud"
   },
   "author": "patrick@atomdigital.com.au",
   "license": "ISC",

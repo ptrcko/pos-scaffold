@@ -5,7 +5,7 @@ method: post
 {% liquid
   function object = '<%= options.outputLogicFolder %>/commands/<%= modelNamePlural %>/create', object: context.params.<%= modelName %>
   if object.valid
-    include 'redirect_to', url: '/<%= modelNamePlural %>'
+    include 'modules/func/redirect_to', url: '/<%= modelNamePlural %>'
   else
     include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/new', object: object
   endif

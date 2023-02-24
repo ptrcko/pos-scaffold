@@ -7,8 +7,8 @@ method: delete
   function object = '<%= options.outputLogicFolder %>/commands/<%= modelNamePlural %>/delete', object: object
 
   if object.valid
-    include 'redirect_to', url: '/<%= modelNamePlural %>', notice: 'app.models.shared.deleted'
+    include 'modules/func/redirect_to', url: '/<%= modelNamePlural %>', notice: 'app.models.shared.deleted'
   else
-    include 'redirect_to', url: '/<%= modelNamePlural %>', error: 'app.models.shared.delete_failed'
+    include 'modules/func/redirect_to', url: '/<%= modelNamePlural %>', error: 'app.models.shared.delete_failed'
   endif
 %}

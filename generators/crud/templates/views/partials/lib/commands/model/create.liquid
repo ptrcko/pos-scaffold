@@ -3,7 +3,7 @@
   function object = '<%= options.outputLogicFolder %>/commands/<%= modelNamePlural %>/create/check', object: object
 
   if object.valid
-    function object = '<%= options.outputLogicFolder %>/commands/execute', mutation_name: '<%= modelNamePlural %>/create' object: object
+    function object = '<%= options.outputLogicFolder %>/commands/execute', mutation_name: '<%= options.outputLogicFolder %>/<%= modelNamePlural %>/create' object: object
   endif
 
   return object

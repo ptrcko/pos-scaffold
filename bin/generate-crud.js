@@ -40,7 +40,7 @@ const run = (options) =>{
     const schemaFolder = path.join(config.basePath, opt.schemaFolder,"schema");
     console.log(schemaFolder);
     files = fs.readdir(schemaFolder,function(e,files){
-      //console.log(files);
+      console.log(files);
       for (var i = 0; i < files.length; i++) {
         console.log(files[i]);
         //Do something
