@@ -5,14 +5,14 @@ const pluralize = require('pluralize');
 const fs = require('fs');
 const yaml = require('js-yaml');
 const startCase = require('lodash.startcase');
-const basePath = require('../../config.js').basePath
+let config =  fs.readFileSync('.yo-rc.json');;
+config = JSON.parse(config);
+console.log(config);
 
 
+const readYml = (schema) =>{
 
-const readYml = (schema,schemaFolder) =>{
-  const folderPath = path.join(basePath, schemaFolder, 'schema');
-
-  const filePath = `${folderPath}\\${schema}.yml`
+  const filePath = `${config.schemaFolderPath}\\${schema}.yml`
   try {
     const data = fs.readFileSync(filePath, 'utf8');
 
@@ -31,13 +31,9 @@ const readYml = (schema,schemaFolder) =>{
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    this.argument('schema', { type: String, required: true });
-    this.argument('schemaFolder', { type: String, required: true });
-    this.argument('outputLogicFolder', { type: String, required: true });
-    this.argument('outputThemeFolder', { type: String, required: true });
-    this.argument('outputTheme', { type: String, required: true });
+    this.options = config;
 
-    const properties = readYml(this.options.schema, this.options.schemaFolder)
+    const properties = readYml(this.schema, this.options.schemaFolder)
     const attributes = properties.map((attr) => {
       return {
         name: attr.name,
@@ -144,10 +140,6 @@ module.exports = class extends Generator {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  install() {
-    // process.chdir(`${this.contextRoot}/${this.props.projectDir}`);
   }
 
   end() {
