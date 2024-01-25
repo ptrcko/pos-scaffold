@@ -7,8 +7,7 @@ const yaml = require('js-yaml');
 const startCase = require('lodash.startcase');
 let config =  fs.readFileSync('.yo-rc.json');;
 config = JSON.parse(config);
-console.log(config);
-
+basePath = config.projectPath;
 
 const readYml = (schema) =>{
 
@@ -31,9 +30,10 @@ const readYml = (schema) =>{
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    this.options = config;
+    this.argument('schema', { type: String, required: true });
 
-    const properties = readYml(this.schema, this.options.schemaFolder)
+    console.log(this.schema)
+    const properties = readYml(this.options.schema, this.options.schemaFolder)
     const attributes = properties.map((attr) => {
       return {
         name: attr.name,
@@ -42,19 +42,14 @@ module.exports = class extends Generator {
       };
     });
     
-    const options = this.options;
-    this.options.outputLogicFolderLocation = this.options.outputLogicFolder
-    this.options.outputThemeFolderLocation = this.options.outputThemeFolder
-    if (options.schmea = "app"){
-      const optionalPublicFolder = "/public"
-      this.options.outputLogicFolderLocation += optionalPublicFolder
-      this.options.outputThemeFolderLocation += optionalPublicFolder
-    }
+    this.options.outputLogicFolderLocation = config.outputLogicFolder + "/public"
+    this.options.outputThemeFolderLocation = config.outputThemeFolder + "/public"
+
     this.props = {
       modelName: this.options.schema,
       modelNamePlural: pluralize(this.options.schema),
       attributes: attributes,
-      options: options,
+      options: this.options,
       graphqlArgumentMap: {
         string: "String",
         text: "String",

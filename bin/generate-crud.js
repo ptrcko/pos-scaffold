@@ -8,11 +8,9 @@ const path = require("path");
 const fs = require('fs');
 let config =  fs.readFileSync('.yo-rc.json');;
 config = JSON.parse(config);
-console.log(config);
 const run = () =>{
 
   files = fs.readdir(config.schemaFolderPath,function(e,files){
-    console.log(files);
     for (var i = 0; i < files.length; i++) {
       console.log(files[i]);
       //Do something
@@ -29,9 +27,8 @@ const run = () =>{
 const runYeoman = (modelName, options) => {
   const generatorName = 'crud'
   const generatorPath = path.join(__dirname, "..", "generators", generatorName);
-  
   env.register(generatorPath, generatorName);
-  const cmd = `crud`;
+  const cmd = `crud ${modelName}`;
   env.run(cmd).then((e)=> {
     if(e){
       console.log(e);
@@ -41,8 +38,9 @@ const runYeoman = (modelName, options) => {
 }
 
 program
-  .action(function(){
-    run()
+
+  .action(function(options){
+    run(options)
   });
 
 program.parse(process.argv);
