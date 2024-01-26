@@ -1,0 +1,10 @@
+{
+  "projectPath": "C:\\Users\\Jepto\\Documents\\pOS Projects\\pos-scaffold",
+  "schmeaFolder": "app",
+  "logicDependencyFolder": "modules/func",
+  "outputLogicFolder": "modules/your-module",
+  "outputThemeFolder": "modules/theme",
+  "outputTheme": "simple",
+  "schemaFolderPath": "C:\\Users\\Jepto\\Documents\\pOS Projects\\pos-scaffold\\app\\schema",
+  "graphqlTablePath": ""
+}

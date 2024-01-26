@@ -35,6 +35,9 @@ module.exports = class extends Generator {
     console.log(this.schema)
     const properties = readYml(this.options.schema, this.options.schemaFolder)
     const attributes = properties.map((attr) => {
+      if(attr.type == null){
+        attr.type = "string";
+      }
       return {
         name: attr.name,
         nameHuman: startCase(attr.name),
@@ -44,12 +47,13 @@ module.exports = class extends Generator {
     
     this.options.outputLogicFolderLocation = config.outputLogicFolder + "/public"
     this.options.outputThemeFolderLocation = config.outputThemeFolder + "/public"
-
+    
     this.props = {
       modelName: this.options.schema,
       modelNamePlural: pluralize(this.options.schema),
       attributes: attributes,
       options: this.options,
+      config: config,
       graphqlArgumentMap: {
         string: "String",
         text: "String",
@@ -124,12 +128,12 @@ module.exports = class extends Generator {
       )
       this.fs.copyTpl(
         this.templatePath('./views/partials/theme/simple/model'),
-        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/views/partials/${this.options.outputTheme}/${this.props.modelNamePlural}`),
+        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/views/partials/${config.outputTheme}/${this.props.modelNamePlural}`),
         this.props
       )
       this.fs.copyTpl(
         this.templatePath('./translations/model.yml'),
-        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/translations/${this.options.outputTheme}/${this.props.modelNamePlural}.yml`),
+        this.destinationPath(`${basePath}/${this.options.outputThemeFolderLocation}/translations/${config.outputTheme}/${this.props.modelNamePlural}.yml`),
         this.props
       )
     } catch (e) {

@@ -9,7 +9,7 @@ query search(
     per_page: $limit
     filter: {
       id: { value: $id }
-      table: { value: "<%= modelName %>" }
+      table: { value: "<%= config.graphqlTablePath %><%= modelName %>" }
       properties: [
       <% attributes.forEach((attr) => { -%>
         { name: "<%= attr.name %>" value: $<%= attr.name %> }

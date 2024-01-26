@@ -13,9 +13,7 @@ const run = () =>{
   files = fs.readdir(config.schemaFolderPath,function(e,files){
     for (var i = 0; i < files.length; i++) {
       console.log(files[i]);
-      //Do something
       fileParts = files[i].split(".");
-      //console.log({fileParts})
       if(fileParts[1] =="yml"){
         runYeoman(fileParts[0], config);
       }

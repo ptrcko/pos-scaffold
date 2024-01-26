@@ -49,11 +49,15 @@ const quesions = [
   .then(answers =>{
     if(answers.schmeaFolder === "app"){
       schemaFolderPath = path.join(answers.projectPath, answers.schmeaFolder, "schema");  
+      graphqlTablePath = "";
     }else{
-      schemaFolder = path.join(answers.projectPath, answers.schmeaFolder, "public", "schema");  
+      schemaFolderPath = path.join(answers.projectPath, answers.schmeaFolder, "public", "schema");  
+      graphqlTablePath = `${answers.schmeaFolder}/`
     }
     answers.schemaFolderPath = schemaFolderPath;
+    answers.graphqlTablePath = graphqlTablePath;
     var json = JSON.stringify(answers, null, 2);
+    
     fs.writeFileSync(".yo-rc.json",json);
     program
       .name('generate')

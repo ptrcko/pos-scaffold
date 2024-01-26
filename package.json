@@ -2,9 +2,11 @@
   "name": "pos-scaffold",
   "version": "1.0.0",
   "description": "generate",
-  "main": "./bin/generate.js",
+  "bin": {
+    "pos-scaffold": "./bin/generate.js"
+  },
   "scripts": {
-    "generate": "node bin/generate"
+    "generate": "node bin/generate crud"
   },
   "author": "patrick@atomdigital.com.au",
   "license": "ISC",
