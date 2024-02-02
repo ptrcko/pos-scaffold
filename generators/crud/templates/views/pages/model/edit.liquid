@@ -1,5 +1,10 @@
 {% liquid
-  function object = '<%= options.outputLogicFolder %>/queries/<%= modelNamePlural %>/find', id: context.params.id
 
-  include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/edit', object: object
+  include '<%= config.logicDependencyFolder %>/logged_in_or_redirect'
+  content_for page_title
+  print 'app.models.<%= modelNamePlural %>.edit' | t | append: " - " | append: context.params.id
+  endcontent_for
+  function object = '<%= config.outputLogicFolder %>/queries/<%= modelNamePlural %>/find', id: context.params.id
+
+  include '<%= config.outputThemeFolder %>/simple/<%= modelNamePlural %>/edit', object: object
 %}

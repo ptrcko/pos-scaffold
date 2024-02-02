@@ -5,43 +5,45 @@ const path = require("path");
 
 const fs = require('fs');
 const inquirer = require('inquirer');
+let config =  fs.readFileSync('.yo-rc.json');;
+config = JSON.parse(config);
 
 const quesions = [
    {
      type: "input",
      name: "projectPath",
      message: "Where is your project code?",
-     default: process.cwd() // Default to current folder name
+     default: config.projectPath || process.cwd() // Default to current folder name
    },
    {
      type: "input",
      name: "schmeaFolder",
      message: "Where is the schema folder to read?",
-     default: "app"
+     default: config.schmeaFolder || "app"
    },
    {
      type: "input",
      name: "logicDependencyFolder",
      message: "Where is the logic dependencies to insert into the templates?",
-     default: "modules/func"
+     default: config.logicDependencyFolder || "modules/func"
    },
    {
      type: "input",
      name: "outputLogicFolder",
      message: "Where do you want to output logic specifc to this project?",
-     default: "modules/your-module"
+     default:  config.outputLogicFolder || "modules/your-module"
    },
    {
      type: "input",
      name: "outputThemeFolder",
      message: "Where do you want to the view files specifc to this project?",
-     default: "modules/theme"
+     default: config.outputThemeFolder || "modules/theme"
    },
    {
      type: "input",
      name: "outputTheme",
      message: "Where is the name of your theme folder?",
-     default: "simple"
+     default: config.outputTheme || "simple"
    }
  ];
 

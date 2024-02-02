@@ -1,9 +1,19 @@
 <div class="grid-x align-center">
   <div class="large-12 medium-12 cell">
-    <div>
-      <a href="/<%= modelNamePlural %>/new" class="button">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <a href="/<%= modelNamePlural %>/new" class="button">
         {{ 'app.models.<%= modelNamePlural %>.add' | t }}
       </a>
+      </div>
+      <div class="top-bar-right">
+        <form id="search">
+        <ul class="menu">
+          <li><input name="keyword" id="keyword" type="search" placeholder="Search" required></li>
+          <li><input class="button" type="submit" value="Search"></li>
+        </ul>
+        </form>
+      </div>
     </div>
     <div class="">
       {% if <%= modelNamePlural %>.results.size > 0 %}
@@ -32,20 +42,21 @@
                   <a href="/<%= modelNamePlural %>/edit?id={{ <%= modelName %>.id }}" class="index-action">
                   <i class="fi-pencil"></i>{{ 'app.models.<%= modelNamePlural %>.edit' | t }}
                   </a>
-                  <form action="/<%= modelNamePlural %>" method="post" class="" onSubmit="if(!confirm('{{ 'app.confirm-delete' | t }}')){ return false; }" >
+                  <form action="/<%= modelNamePlural %>" method="post" class="" onSubmit="if(!confirm('{{ 'app.share.confirm_delete' | t }}')){ return false; }" >
                     {% include 'modules/func/authenticity_token' %}
                     <input type="hidden" name="_method" value="delete" />
                     <input type="hidden" name="id" value="{{ <%= modelName %>.id }}">
 
-                    <button class="index-action"><i class="fi-x"></i> {{ 'app.models.shared.delete' | t }}</button>
+                    <button class="index-action"><i class="fi-x"></i> {{ 'app.shared.delete' | t }}</button>
                   </form>
                 </td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
+        {% render '<%= config.outputThemeFolder %>/<%= config.outputTheme %>/layout/reusable/pagination', object: <%= modelNamePlural %>  %}
       {% else %}
-        {% include '<%= options.outputThemeFolder %>/<%= options.outputTheme %>/<%= modelNamePlural %>/empty_state' %}
+        {% render '<%= config.outputThemeFolder %>/<%= config.outputTheme %>/<%= modelNamePlural %>/empty_state' %}
       {% endif %}
     </div>
 </div>

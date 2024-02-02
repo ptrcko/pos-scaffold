@@ -12,11 +12,13 @@ basePath = config.projectPath;
 const readYml = (schema) =>{
 
   const filePath = `${config.schemaFolderPath}\\${schema}.yml`
+  console.log(filePath);
   try {
     const data = fs.readFileSync(filePath, 'utf8');
 
     try{
       const properties = yaml.loadAll(data);
+      console.log(properties);
       return properties[0].properties;
     }catch (err){
       console.error(err);
@@ -32,8 +34,8 @@ module.exports = class extends Generator {
     super(args, opts);
     this.argument('schema', { type: String, required: true });
 
-    console.log(this.schema)
     const properties = readYml(this.options.schema, this.options.schemaFolder)
+
     const attributes = properties.map((attr) => {
       if(attr.type == null){
         attr.type = "string";
@@ -51,6 +53,8 @@ module.exports = class extends Generator {
     this.props = {
       modelName: this.options.schema,
       modelNamePlural: pluralize(this.options.schema),
+      humanModelName: startCase(this.options.schema),
+      humanModelNamePlural: startCase(pluralize(this.options.schema)),
       attributes: attributes,
       options: this.options,
       config: config,
@@ -89,12 +93,11 @@ module.exports = class extends Generator {
       },
       formFieldTypeMap: {
         string: "text",
-        text: "date",
         integer: "number",
         boolean: "text",
         float: "text",
-        date: "text",
-        datetime: "text",
+        date: "date",
+        datetime: "datetime-local",
         array: "text",
         upload: "text"
       },

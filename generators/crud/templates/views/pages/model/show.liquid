@@ -3,9 +3,15 @@ slug: <%= modelNamePlural %>/show
 ---
 {% liquid
 
+  include '<%= config.logicDependencyFolder %>/logged_in_or_redirect'
   assign <%= modelName %>_id = context.params.slug3 | split: '-' | last
-  function <%= modelName %> = '<%= options.outputLogicFolder %>/queries/<%= modelNamePlural %>/find', id: <%= modelName %>_id
-  include '<%= options.outputLogicFolder %>/present_or_404', property: <%= modelName %>.id
 
-  include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/show', <%= modelName %>: <%= modelName %>
+  content_for page_title
+  print 'app.models.<%= modelNamePlural %>.show' | t | append: " - " | append: <%= modelName %>_id
+  endcontent_for
+
+  function <%= modelName %> = '<%= config.outputLogicFolder %>/queries/<%= modelNamePlural %>/find', id: <%= modelName %>_id
+  include '<%= config.logicDependencyFolder %>/present_or_404', property: <%= modelName %>.id
+
+  include '<%= config.outputThemeFolder %>/simple/<%= modelNamePlural %>/show', <%= modelName %>: <%= modelName %>
 %}

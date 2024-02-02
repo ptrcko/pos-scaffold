@@ -3,10 +3,13 @@ slug: <%= modelNamePlural %>
 method: post
 ---
 {% liquid
-  function object = '<%= options.outputLogicFolder %>/commands/<%= modelNamePlural %>/create', object: context.params.<%= modelName %>
+
+  include '<%= config.logicDependencyFolder %>/logged_in_or_redirect'
+
+  function object = '<%= config.outputLogicFolder %>/commands/<%= modelNamePlural %>/create', object: context.params.<%= modelName %>
   if object.valid
     include 'modules/func/redirect_to', url: '/<%= modelNamePlural %>'
   else
-    include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/new', object: object
+    include '<%= config.outputThemeFolder %>/simple/<%= modelNamePlural %>/new', object: object
   endif
 %}

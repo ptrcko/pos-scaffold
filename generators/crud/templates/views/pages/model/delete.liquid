@@ -3,8 +3,10 @@ slug: <%= modelNamePlural %>
 method: delete
 ---
 {% liquid
-  function object = '<%= options.outputLogicFolder %>/queries/<%= modelNamePlural %>/find', id: context.params.id
-  function object = '<%= options.outputLogicFolder %>/commands/<%= modelNamePlural %>/delete', object: object
+
+  include '<%= config.logicDependencyFolder %>/logged_in_or_redirect'
+  function object = '<%= config.outputLogicFolder %>/queries/<%= modelNamePlural %>/find', id: context.params.id
+  function object = '<%= config.outputLogicFolder %>/commands/<%= modelNamePlural %>/delete', object: object
 
   if object.valid
     include 'modules/func/redirect_to', url: '/<%= modelNamePlural %>', notice: 'app.models.shared.deleted'

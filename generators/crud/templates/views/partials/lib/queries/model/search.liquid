@@ -1,6 +1,6 @@
 {% liquid
-  graphql r = '<%= options.outputLogicFolder %>/<%= modelNamePlural %>/search', limit: limit, page: 1
-  include '<%= options.logicDependencyFolder %>/queries/handle_graphql_response', r: r, name: 'queries/<%= modelNamePlural %>/search'
+  graphql r = '<%= config.outputLogicFolder %>/<%= modelNamePlural %>/search', limit: limit, page: page, keyword: keyword
+  include '<%= config.logicDependencyFolder %>/queries/handle_graphql_response', r: r, name: 'queries/<%= modelNamePlural %>/search'
 
   return r.<%= modelNamePlural %>
 %}

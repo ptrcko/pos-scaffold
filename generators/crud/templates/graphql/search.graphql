@@ -1,15 +1,19 @@
 query search(
   $id: ID
   $limit: Int = 20
+  $page: Int = 1
+  $keyword: String = ""
 <% attributes.forEach((attr) => { -%>
   $<%= attr.name %>: String
 <% }); -%>
 ) {
   <%= modelNamePlural %>: records(
     per_page: $limit
+    page: $page
     filter: {
       id: { value: $id }
       table: { value: "<%= config.graphqlTablePath %><%= modelName %>" }
+      fulltext: {keyword: $keyword, match_type: CONTAINS}
       properties: [
       <% attributes.forEach((attr) => { -%>
         { name: "<%= attr.name %>" value: $<%= attr.name %> }
@@ -21,6 +25,8 @@ query search(
     ]
   ){
     total_entries
+    total_pages
+    current_page
     results {
       id
       created_at

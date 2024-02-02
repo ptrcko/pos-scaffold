@@ -1,5 +1,14 @@
 {% liquid
-  function <%= modelNamePlural %> = '<%= options.outputLogicFolder %>/queries/<%= modelNamePlural %>/search', limit: 100
 
-  include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/index', <%= modelNamePlural %>: <%= modelNamePlural %>
+  include '<%= config.logicDependencyFolder %>/logged_in_or_redirect'
+
+  assign page = context.params.page | default: 1 | plus: 0
+  assign per_page = context.params.per_page | default: 15 |  plus: 0
+  assign keyword = context.params.keyword
+  content_for page_title
+  print 'app.models.<%= modelNamePlural %>.name_plural' | t
+  endcontent_for
+  function <%= modelNamePlural %> = '<%= config.outputLogicFolder %>/queries/<%= modelNamePlural %>/search', page: page, limit: per_page, keyword: keyword
+
+  include '<%= config.outputThemeFolder %>/simple/<%= modelNamePlural %>/index', <%= modelNamePlural %>: <%= modelNamePlural %>
 %}

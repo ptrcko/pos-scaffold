@@ -1,3 +1,9 @@
 {% liquid
-  include '<%= options.outputThemeFolder %>/simple/<%= modelNamePlural %>/new'
+
+  include '<%= config.logicDependencyFolder %>/login_or_redirect'
+
+  content_for page_title
+  print 'app.models.<%= modelNamePlural %>.new' | t
+  endcontent_for
+  include '<%= config.outputThemeFolder %>/simple/<%= modelNamePlural %>/new'
 %}

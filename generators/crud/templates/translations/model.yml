@@ -1,9 +1,15 @@
-<%= modelNamePlural %>:
-  new: New <%= modelName %>
-  add: Add <%= modelName %>
-  edit: Edit <%= modelName %>
-  empty_state: You haven't added any <%= modelNamePlural %> yet. <br> Create your first one now!
-  form:
-<% attributes.forEach((attr) => { -%>
-    <%= attr.name %>: <%= attr.nameHuman %>
-<% }); -%>
+en:
+  app:
+    models:
+      <%= modelNamePlural %>:
+        name: <%= humanModelName %>
+        name_plural: <%= humanModelNamePlural %>
+        new: New <%= humanModelName %>
+        add: Add <%= humanModelName %>
+        edit: Edit <%= humanModelName %>
+        show: View <%= humanModelName %>
+        empty_state: You haven't added any <%= humanModelNamePlural %> yet. <br> Create your first one now!
+        form:
+    <% attributes.forEach((attr) => { -%>
+      <%= attr.name %>: <%= attr.nameHuman %>
+    <% }); -%>

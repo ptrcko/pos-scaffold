@@ -9,20 +9,18 @@ const fs = require('fs');
 let config =  fs.readFileSync('.yo-rc.json');;
 config = JSON.parse(config);
 const run = () =>{
-
   files = fs.readdir(config.schemaFolderPath,function(e,files){
     for (var i = 0; i < files.length; i++) {
-      console.log(files[i]);
       fileParts = files[i].split(".");
       if(fileParts[1] =="yml"){
-        runYeoman(fileParts[0], config);
+        runYeoman(fileParts[0]);
       }
     }
   })
 }
 
 
-const runYeoman = (modelName, options) => {
+const runYeoman = (modelName) => {
   const generatorName = 'crud'
   const generatorPath = path.join(__dirname, "..", "generators", generatorName);
   env.register(generatorPath, generatorName);

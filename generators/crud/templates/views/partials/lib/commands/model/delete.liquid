@@ -1,8 +1,8 @@
 {% liquid
-  function object = '<%= options.logicDependencyFolder %>/commands/<%= modelNamePlural %>/delete/check',  object: object
+  function object = '<%= config.logicDependencyFolder %>/commands/<%= modelNamePlural %>/delete/check',  object: object
 
   if object.valid
-    function object = '<%= options.logicDependencyFolder %>/commands/execute', mutation_name: '<%= options.outputLogicFolder %>/<%= modelNamePlural %>/delete', selection: 'record_delete', object: object
+    function object = '<%= config.logicDependencyFolder %>/commands/execute', mutation_name: '<%= config.outputLogicFolder %>/<%= modelNamePlural %>/delete', selection: 'record_delete', object: object
   endif
 
   return object

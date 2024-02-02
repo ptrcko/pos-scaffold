@@ -1,7 +1,7 @@
 <div class="grid-x align-center">
   <div class="large-4 medium-6 cell">
     <h1 class="text-4xl font-medium text-center">
-      <%= modelName %> - {{ <%= modelName %>.id }}
+      {{ 'app.models.<%= modelNamePlural %>.show' | t }} - {{ <%= modelName %>.id }}
     </h1>
     <table>
       <thead>
